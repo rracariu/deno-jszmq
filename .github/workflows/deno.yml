@@ -1,0 +1,22 @@
+name: Deno CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Deno 1.x
+      uses: denoland/setup-deno@v1
+      with:
+        deno-version: v1.x
+    - run: deno lint
+    - run: deno cache --unstable ./src/index.ts
+    - run: deno test -A --unstable
