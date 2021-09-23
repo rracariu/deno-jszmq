@@ -1,7 +1,7 @@
 # deno-jszmq
 
-**deno-jszmq** is a port of **jszmq** to TypeScript and Deno, whereas jszmq is
-port of zeromq to Javascript, supporting both browsers, Deno. The library only
+**deno-jszmq** is a port of [jszmq](https://github.com/zeromq/jszmq) to TypeScript and Deno, whereas jszmq is
+port of zeromq to Javascript, supporting both browsers and Deno. The library only
 support the WebSocket transport
 ([ZWS 2.0](https://rfc.zeromq.org/spec:45/ZWS/)).
 

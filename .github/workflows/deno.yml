@@ -16,7 +16,7 @@ jobs:
     - name: Use Deno 1.x
       uses: denoland/setup-deno@v1
       with:
-        deno-version: v1.x
+        deno-version: v1.12.2
     - run: deno lint
     - run: deno cache --unstable ./src/index.ts
     - run: deno test -A --unstable
