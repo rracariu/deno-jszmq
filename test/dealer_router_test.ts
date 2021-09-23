@@ -5,7 +5,7 @@ import { Frame, IEndpoint } from "../src/Types.ts";
 import {
   assert,
   assertStrictEquals,
-} from "https://deno.land/std@0.106.0/testing/asserts.ts";
+} from "https://deno.land/std@0.108.0/testing/asserts.ts";
 
 const url = "ws://localhost:3002/dealer-router";
 

@@ -82,13 +82,12 @@ export class DenoHttpServer<Data extends Record<string, unknown>>
       return new Response("Invalid path.", { status: 404 });
     }
 
-    // deno-lint-ignore no-explicit-any
-    const { websocket, response } = Deno.upgradeWebSocket(req) as any;
+    const { socket, response } = Deno.upgradeWebSocket(req);
     const headers: { [key: string]: string } = {};
     req.headers.forEach((val, key) => {
       headers[key] = val;
     });
-    websocket.onopen = () => handler.onConnection(websocket, headers as Data);
+    socket.onopen = () => handler.onConnection(socket, headers as Data);
 
     return response;
   }

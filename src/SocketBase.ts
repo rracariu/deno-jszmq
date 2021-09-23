@@ -1,4 +1,4 @@
-import { EventEmitter } from "https://deno.land/std@0.106.0/node/events.ts";
+import { EventEmitter } from "https://deno.land/std@0.108.0/node/events.ts";
 import { SocketOptions } from "./SocketOptions.ts";
 import { find, pull } from "https://cdn.skypack.dev/lodash";
 import { Buffer, Frame, IEndpoint, IListener, Msg } from "./Types.ts";
