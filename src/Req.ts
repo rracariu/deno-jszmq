@@ -1,5 +1,5 @@
 import { Dealer } from "./Dealer.ts";
-import { Buffer, IEndpoint, Msg } from "./Types.ts";
+import { Buffer, Endpoint, Msg } from "./Types.ts";
 
 export class Req extends Dealer {
   private static bottom = Buffer.alloc(0);
@@ -27,7 +27,7 @@ export class Req extends Dealer {
   }
 
   protected xrecv(
-    endpoint: IEndpoint,
+    endpoint: Endpoint,
     bottom: Buffer,
     ...frames: Buffer[]
   ): void {

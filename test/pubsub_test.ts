@@ -1,7 +1,7 @@
 import { DenoHttpServer } from "../src/utils/DenoHttpServer.ts";
 import { XPub } from "../src/Xpub.ts";
 import { Sub } from "../src/Sub.ts";
-import { IEndpoint } from "../src/Types.ts";
+import { Endpoint } from "../src/Types.ts";
 
 import {
   assert,
@@ -25,7 +25,7 @@ Deno.test({
     });
 
     const sub = new Sub();
-    sub.addListener("message", (_endpoint: IEndpoint, topic: Uint8Array) => {
+    sub.addListener("message", (_endpoint: Endpoint, topic: Uint8Array) => {
       assertStrictEquals(topic.toString(), "AAA");
       complete = true;
       ensureCompleted();
@@ -66,7 +66,7 @@ Deno.test({
     });
 
     const sub = new Sub();
-    sub.addListener("message", (_endpoint: IEndpoint, topic1: Uint8Array) => {
+    sub.addListener("message", (_endpoint: Endpoint, topic1: Uint8Array) => {
       if (first) {
         assertStrictEquals(topic1.toString(), "A");
         first = false;
@@ -75,7 +75,7 @@ Deno.test({
       pub.send("A");
       pub.send("B");
 
-      sub.addListener("message", (_endpoint: IEndpoint, topic2: Uint8Array) => {
+      sub.addListener("message", (_endpoint: Endpoint, topic2: Uint8Array) => {
         assertStrictEquals(topic2.toString(), "B");
         complete = true;
         ensureCompleted();

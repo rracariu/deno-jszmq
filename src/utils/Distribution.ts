@@ -1,5 +1,5 @@
 import { pull } from "https://cdn.skypack.dev/lodash";
-import { IEndpoint, Msg } from "../Types.ts";
+import { Endpoint, Msg } from "../Types.ts";
 
 function swap<T>(items: Array<T>, index1: number, index2: number): void {
   if (index1 === index2) {
@@ -17,17 +17,17 @@ function swap<T>(items: Array<T>, index1: number, index2: number): void {
 }
 
 export class Distribution {
-  #endpoints: IEndpoint[] = [];
+  #endpoints: Endpoint[] = [];
   #matching = 0;
   #active = 0;
 
-  public attach(endpoint: IEndpoint): void {
+  public attach(endpoint: Endpoint): void {
     this.#endpoints.push(endpoint);
     swap(this.#endpoints, this.#active, this.#endpoints.length - 1);
     this.#active++;
   }
 
-  public match(endpoint: IEndpoint): void {
+  public match(endpoint: Endpoint): void {
     const index = this.#endpoints.indexOf(endpoint);
 
     // If pipe is already matching do nothing.
@@ -49,7 +49,7 @@ export class Distribution {
     this.#matching = 0;
   }
 
-  public terminated(endpoint: IEndpoint): void {
+  public terminated(endpoint: Endpoint): void {
     // Remove the endpoint from the list; adjust number of matching, active and/or
     // eligible endpoint accordingly.
     if (this.#endpoints.indexOf(endpoint) < this.#matching) {
@@ -62,7 +62,7 @@ export class Distribution {
     pull(this.#endpoints, endpoint);
   }
 
-  public activated(endpoint: IEndpoint): void {
+  public activated(endpoint: Endpoint): void {
     // Move the pipe from passive to active state.
     swap(this.#endpoints, this.#endpoints.indexOf(endpoint), this.#active);
     this.#active++;
@@ -86,7 +86,7 @@ export class Distribution {
     }
   }
 
-  public write(endpoint: IEndpoint, msg: Msg): boolean {
+  public write(endpoint: Endpoint, msg: Msg): boolean {
     if (!endpoint.send(msg)) {
       swap(
         this.#endpoints,

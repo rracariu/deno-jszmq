@@ -1,12 +1,12 @@
 import { SocketBase } from "./SocketBase.ts";
 import { LoadBalancer } from "./utils/LoadBalancer.ts";
-import { IEndpoint, Msg } from "./Types.ts";
+import { Endpoint, Msg } from "./Types.ts";
 
 export class Push extends SocketBase {
   #loadBalancer = new LoadBalancer();
   #pending: Msg[] = [];
 
-  protected attachEndpoint(endpoint: IEndpoint): void {
+  protected attachEndpoint(endpoint: Endpoint): void {
     this.#loadBalancer.attach(endpoint);
 
     for (;;) {
@@ -21,7 +21,7 @@ export class Push extends SocketBase {
     }
   }
 
-  protected endpointTerminated(endpoint: IEndpoint): void {
+  protected endpointTerminated(endpoint: Endpoint): void {
     this.#loadBalancer.terminated(endpoint);
   }
 

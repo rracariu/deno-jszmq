@@ -1,10 +1,10 @@
 import { SocketBase } from "./SocketBase.ts";
 import { includes, pull } from "https://cdn.skypack.dev/lodash";
-import { Buffer, IEndpoint, Msg } from "./Types.ts";
+import { Buffer, Endpoint, Msg } from "./Types.ts";
 
 export class Router extends SocketBase {
-  #anonymousPipes: IEndpoint[] = [];
-  #pipes: Map<string, IEndpoint> = new Map<string, IEndpoint>();
+  #anonymousPipes: Endpoint[] = [];
+  #pipes: Map<string, Endpoint> = new Map<string, Endpoint>();
   protected nextId = 0;
 
   public constructor() {
@@ -12,16 +12,16 @@ export class Router extends SocketBase {
     this.options.recvRoutingId = true;
   }
 
-  protected attachEndpoint(endpoint: IEndpoint): void {
+  protected attachEndpoint(endpoint: Endpoint): void {
     this.#anonymousPipes.push(endpoint);
   }
 
-  protected endpointTerminated(endpoint: IEndpoint): void {
+  protected endpointTerminated(endpoint: Endpoint): void {
     this.#pipes.delete(endpoint.routingKeyString);
     pull(this.#anonymousPipes, endpoint);
   }
 
-  protected xrecv(endpoint: IEndpoint, ...msg: Buffer[]): void {
+  protected xrecv(endpoint: Endpoint, ...msg: Buffer[]): void {
     // For anonymous pipe, the first message is the identity
     if (includes(this.#anonymousPipes, endpoint)) {
       pull(this.#anonymousPipes, endpoint);
@@ -49,7 +49,7 @@ export class Router extends SocketBase {
     this.xxrecv(endpoint, endpoint.routingKey, ...msg);
   }
 
-  protected xxrecv(endpoint: IEndpoint, ...msg: Buffer[]): void {
+  protected xxrecv(endpoint: Endpoint, ...msg: Buffer[]): void {
     this.emit("message", endpoint, ...msg);
   }
 

@@ -4,7 +4,7 @@ export { Buffer };
 export type Frame = Buffer | string;
 export type Msg = Frame[];
 
-export interface IEndpoint<
+export interface Endpoint<
   Data extends Record<string, unknown> = Record<string, never>,
 > {
   send(msg: Msg): boolean;
@@ -23,7 +23,7 @@ export interface IEndpoint<
   on(event: string | symbol, listener: (...args: any[]) => void): this;
 }
 
-export interface IListener {
+export interface Listener {
   readonly address: string;
   removeListener(
     event: string | symbol,

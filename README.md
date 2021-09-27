@@ -1,8 +1,8 @@
 # deno-jszmq
 
-**deno-jszmq** is a port of [jszmq](https://github.com/zeromq/jszmq) to TypeScript and Deno, whereas jszmq is
-port of zeromq to Javascript, supporting both browsers and Deno. The library only
-support the WebSocket transport
+**deno-jszmq** is a port of [jszmq](https://github.com/zeromq/jszmq) to
+TypeScript and Deno, whereas jszmq is port of zeromq to Javascript, supporting
+both browsers and Deno. The library only support the WebSocket transport
 ([ZWS 2.0](https://rfc.zeromq.org/spec:45/ZWS/)).
 
 The API of the library is similar to that of
@@ -23,8 +23,21 @@ it.
 
 ## Installation
 
+Directly importing it:
+
+```typescript
+import * as zmq from "https://deno.land/x/jszmq/mod.ts"
 ```
-npm install --save jszmq
+
+Or as `import-map.json`:
+```json
+"imports": {
+  "jszmq": "https://deno.land/x/jszmq/mod.ts",
+}
+```
+
+```
+deno run -A --unstable --importmap=import-map.json
 ```
 
 ## Supported socket types
@@ -47,11 +60,7 @@ Following socket types are currently supported:
 Import jszmq with one of the following:
 
 ```typescript
-import * as zmq from "jszmq";
-```
-
-```typescript
-const zmq = require("jszmq");
+import * as zmq from "https://deno.land/x/jszmq/mod.ts";
 ```
 
 ### Creating a socket

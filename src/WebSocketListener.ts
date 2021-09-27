@@ -1,12 +1,12 @@
 import { EventEmitter } from "https://deno.land/std@0.108.0/node/events.ts";
 import { SocketOptions } from "./SocketOptions.ts";
 import { WebSocketEndpoint as Endpoint } from "./WebSocketEndpoint.ts";
-import { IListener } from "./Types.ts";
+import { Listener } from "./Types.ts";
 import { HttpHandler } from "./HttpHandler.ts";
 
 export class WebSocketListener<Data extends Record<string, unknown>>
   extends EventEmitter
-  implements IListener {
+  implements Listener {
   public readonly path: string | undefined;
   #endPoint?: Endpoint<Data>;
 

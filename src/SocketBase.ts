@@ -1,14 +1,14 @@
 import { EventEmitter } from "https://deno.land/std@0.108.0/node/events.ts";
 import { SocketOptions } from "./SocketOptions.ts";
 import { find, pull } from "https://cdn.skypack.dev/lodash";
-import { Buffer, Frame, IEndpoint, IListener, Msg } from "./Types.ts";
+import { Buffer, Endpoint, Frame, Listener, Msg } from "./Types.ts";
 import { WebSocketListener } from "./WebSocketListener.ts";
 import { WebSocketEndpoint } from "./WebSocketEndpoint.ts";
 import { HttpHandler } from "./HttpHandler.ts";
 
 export class SocketBase extends EventEmitter {
-  #endpoints: IEndpoint[] = [];
-  #binds: IListener[] = [];
+  #endpoints: Endpoint[] = [];
+  #binds: Listener[] = [];
   public readonly options = new SocketOptions();
 
   public constructor() {
@@ -41,7 +41,7 @@ export class SocketBase extends EventEmitter {
   public disconnect(address: string): void {
     const endpoint = find(
       this.#endpoints,
-      (e: IEndpoint) => e.address === address,
+      (e: Endpoint) => e.address === address,
     );
 
     if (endpoint) {
@@ -67,7 +67,7 @@ export class SocketBase extends EventEmitter {
   public unbind(address: string): void {
     const listener = find(
       this.#binds,
-      (b: IListener) => b.address === address,
+      (b: Listener) => b.address === address,
     );
 
     if (listener) {
@@ -98,7 +98,7 @@ export class SocketBase extends EventEmitter {
 
   public emit(
     eventName: string | symbol,
-    endpoint: IEndpoint,
+    endpoint: Endpoint,
     // deno-lint-ignore no-explicit-any
     ...args: any[]
   ): boolean {
@@ -113,27 +113,27 @@ export class SocketBase extends EventEmitter {
     throw new Error("not supported");
   }
 
-  private bindAttachEndpoint(endpoint: IEndpoint): void {
+  private bindAttachEndpoint(endpoint: Endpoint): void {
     endpoint.on("terminated", this.bindEndpointTerminated);
     endpoint.on("message", this.xrecv);
 
     this.attachEndpoint(endpoint);
   }
 
-  private bindEndpointTerminated(endpoint: IEndpoint): void {
+  private bindEndpointTerminated(endpoint: Endpoint): void {
     endpoint.removeListener("terminated", this.bindEndpointTerminated);
     endpoint.removeListener("message", this.xrecv);
 
     this.endpointTerminated(endpoint);
   }
 
-  protected attachEndpoint(_endpoint: IEndpoint): void {}
+  protected attachEndpoint(_endpoint: Endpoint): void {}
 
-  protected endpointTerminated(_endpoint: IEndpoint): void {}
+  protected endpointTerminated(_endpoint: Endpoint): void {}
 
-  protected hiccuped(_endpoint: IEndpoint): void {}
+  protected hiccuped(_endpoint: Endpoint): void {}
 
-  protected xrecv(_endpoint: IEndpoint, ..._frames: Buffer[]): void {}
+  protected xrecv(_endpoint: Endpoint, ..._frames: Buffer[]): void {}
 
   protected xsend(_msg: Msg): void {}
 

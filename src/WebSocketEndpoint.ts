@@ -1,6 +1,6 @@
 import { EventEmitter } from "https://deno.land/std@0.108.0/node/events.ts";
 import { SocketOptions } from "./SocketOptions.ts";
-import { Buffer, IEndpoint, Msg } from "./Types.ts";
+import { Buffer, Endpoint, Msg } from "./Types.ts";
 
 enum State {
   Closed,
@@ -11,7 +11,7 @@ enum State {
 
 export class WebSocketEndpoint<Data extends Record<string, unknown>>
   extends EventEmitter
-  implements IEndpoint<Data> {
+  implements Endpoint<Data> {
   #socket!: WebSocket;
   #state: State;
   #frames: Buffer[] = [];

@@ -1,7 +1,7 @@
 import { Router } from "./Router.ts";
-import { Buffer, IEndpoint, Msg } from "./Types.ts";
+import { Buffer, Endpoint, Msg } from "./Types.ts";
 
-type PendingMsg = [IEndpoint, Buffer[]];
+type PendingMsg = [Endpoint, Buffer[]];
 
 export class Rep extends Router {
   private static bottom = Buffer.alloc(0);
@@ -37,7 +37,7 @@ export class Rep extends Router {
     }
   }
 
-  private recvInternal(endpoint: IEndpoint, frames: Buffer[]): void {
+  private recvInternal(endpoint: Endpoint, frames: Buffer[]): void {
     for (;;) {
       const frame = frames.shift();
 
@@ -64,7 +64,7 @@ export class Rep extends Router {
     }
   }
 
-  protected xxrecv(endpoint: IEndpoint, ...frames: Buffer[]): void {
+  protected xxrecv(endpoint: Endpoint, ...frames: Buffer[]): void {
     // If we are in middle of sending a reply, we cannot receive next request yet, add to pending
     if (this.#sendingReply) {
       this.#pending.push([endpoint, frames]);

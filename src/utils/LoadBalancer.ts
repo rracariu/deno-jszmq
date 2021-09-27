@@ -1,14 +1,14 @@
-import { IEndpoint, Msg } from "../Types.ts";
+import { Endpoint, Msg } from "../Types.ts";
 
 export class LoadBalancer {
-  #endpoints: IEndpoint[] = [];
+  #endpoints: Endpoint[] = [];
   #current = 0;
 
-  public attach(endpoint: IEndpoint): void {
+  public attach(endpoint: Endpoint): void {
     this.#endpoints.push(endpoint);
   }
 
-  public terminated(endpoint: IEndpoint): void {
+  public terminated(endpoint: Endpoint): void {
     const index = this.#endpoints.indexOf(endpoint);
 
     if (this.#current === this.#endpoints.length - 1) {

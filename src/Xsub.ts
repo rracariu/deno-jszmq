@@ -1,5 +1,5 @@
 import { SocketBase } from "./SocketBase.ts";
-import { Buffer, IEndpoint, Msg } from "./Types.ts";
+import { Buffer, Endpoint, Msg } from "./Types.ts";
 import { Trie } from "./utils/Trie.ts";
 import { Distribution } from "./utils/Distribution.ts";
 
@@ -13,7 +13,7 @@ export class XSub extends SocketBase {
     this.#distribution = new Distribution();
   }
 
-  protected attachEndpoint(endpoint: IEndpoint): void {
+  protected attachEndpoint(endpoint: Endpoint): void {
     this.#distribution.attach(endpoint);
 
     this.#subscriptions.forEach((s) =>
@@ -21,17 +21,17 @@ export class XSub extends SocketBase {
     );
   }
 
-  protected hiccuped(endpoint: IEndpoint): void {
+  protected hiccuped(endpoint: Endpoint): void {
     this.#subscriptions.forEach((s) =>
       endpoint.send([Buffer.concat([Buffer.from([1]), s])])
     );
   }
 
-  protected endpointTerminated(endpoint: IEndpoint): void {
+  protected endpointTerminated(endpoint: Endpoint): void {
     this.#distribution.terminated(endpoint);
   }
 
-  protected xrecv(endpoint: IEndpoint, ...frames: Buffer[]): void {
+  protected xrecv(endpoint: Endpoint, ...frames: Buffer[]): void {
     const topic = frames[0];
 
     const subscribed = this.#subscriptions.check(topic, 0, topic.length);

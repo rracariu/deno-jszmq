@@ -1,11 +1,11 @@
 import { SocketBase } from "./SocketBase.ts";
-import { Buffer, IEndpoint, Msg } from "./Types.ts";
+import { Buffer, Endpoint, Msg } from "./Types.ts";
 
 export class Pair extends SocketBase {
-  #endpoint?: IEndpoint;
+  #endpoint?: Endpoint;
   #pending: Msg[] = [];
 
-  protected attachEndpoint(endpoint: IEndpoint): void {
+  protected attachEndpoint(endpoint: Endpoint): void {
     if (this.#endpoint) {
       endpoint.close();
       return;
@@ -25,13 +25,13 @@ export class Pair extends SocketBase {
     }
   }
 
-  protected endpointTerminated(endpoint: IEndpoint): void {
+  protected endpointTerminated(endpoint: Endpoint): void {
     if (endpoint === this.#endpoint) {
       this.#endpoint = undefined;
     }
   }
 
-  protected xrecv(endpoint: IEndpoint, ...frames: Buffer[]): void {
+  protected xrecv(endpoint: Endpoint, ...frames: Buffer[]): void {
     if (endpoint === this.#endpoint) {
       this.emit("message", endpoint, ...frames);
     }

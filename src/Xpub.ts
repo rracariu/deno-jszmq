@@ -1,5 +1,5 @@
 import { SocketBase } from "./SocketBase.ts";
-import { Buffer, IEndpoint, Msg } from "./Types.ts";
+import { Buffer, Endpoint, Msg } from "./Types.ts";
 import { MultiTrie } from "./utils/MultiTrie.ts";
 import { Distribution } from "./utils/Distribution.ts";
 
@@ -14,12 +14,12 @@ export class XPub extends SocketBase {
     this.sendUnsubscription = this.sendUnsubscription.bind(this);
   }
 
-  private markAsMatching(endpoint: IEndpoint): void {
+  private markAsMatching(endpoint: Endpoint): void {
     this.#distribution.match(endpoint);
   }
 
   protected sendUnsubscription(
-    endpoint: IEndpoint,
+    endpoint: Endpoint,
     data: Buffer,
     size: number,
   ): void {
@@ -30,11 +30,11 @@ export class XPub extends SocketBase {
     endpoint.send([unsubscription]);
   }
 
-  protected attachEndpoint(endpoint: IEndpoint): void {
+  protected attachEndpoint(endpoint: Endpoint): void {
     this.#distribution.attach(endpoint);
   }
 
-  protected endpointTerminated(endpoint: IEndpoint): void {
+  protected endpointTerminated(endpoint: Endpoint): void {
     this.#subscriptions.removeEndpoint(endpoint, this.sendUnsubscription);
     this.#distribution.terminated(endpoint);
   }
@@ -53,7 +53,7 @@ export class XPub extends SocketBase {
   }
 
   protected xrecv(
-    endpoint: IEndpoint,
+    endpoint: Endpoint,
     subscription: Buffer,
     ...frames: Buffer[]
   ): void {
@@ -89,7 +89,7 @@ export class XPub extends SocketBase {
     this.xxrecv(endpoint, subscription, ...frames);
   }
 
-  protected xxrecv(endpoint: IEndpoint, ...frames: Buffer[]): void {
+  protected xxrecv(endpoint: Endpoint, ...frames: Buffer[]): void {
     this.emit("message", endpoint, ...frames);
   }
 }

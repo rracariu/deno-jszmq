@@ -1,17 +1,17 @@
 import { assert } from "https://deno.land/std@0.108.0/testing/asserts.ts";
-import { Buffer, IEndpoint } from "../Types.ts";
+import { Buffer, Endpoint } from "../Types.ts";
 import { copy, resize } from "./array.ts";
 
 type RemovedCallback = (
-  endpoint: IEndpoint,
+  endpoint: Endpoint,
   buffer: Buffer,
   bufferSize: number,
 ) => void;
 
-type MatchCallback = (endpoint: IEndpoint) => void;
+type MatchCallback = (endpoint: Endpoint) => void;
 
 export class MultiTrie {
-  #endpoints?: Set<IEndpoint>;
+  #endpoints?: Set<Endpoint>;
   #minCharacter: number;
   #count: number;
   #liveNodes: number;
@@ -32,7 +32,7 @@ export class MultiTrie {
     prefix: Buffer,
     start: number,
     size: number,
-    endpoint: IEndpoint,
+    endpoint: Endpoint,
   ): boolean {
     return this.addHelper(prefix, start, size, endpoint);
   }
@@ -41,14 +41,14 @@ export class MultiTrie {
     prefix: Buffer,
     start: number,
     size: number,
-    endpoint: IEndpoint,
+    endpoint: Endpoint,
   ): boolean {
     // We are at the node corresponding to the prefix. We are done.
     if (size === 0) {
       const result = !this.#endpoints;
 
       if (!this.#endpoints) {
-        this.#endpoints = new Set<IEndpoint>();
+        this.#endpoints = new Set<Endpoint>();
       }
 
       this.#endpoints.add(endpoint);
@@ -107,12 +107,12 @@ export class MultiTrie {
     );
   }
 
-  public removeEndpoint(endpoint: IEndpoint, func: RemovedCallback): boolean {
+  public removeEndpoint(endpoint: Endpoint, func: RemovedCallback): boolean {
     return this.removeEndpointHelper(endpoint, Buffer.alloc(0), 0, 0, func);
   }
 
   private removeEndpointHelper(
-    endpoint: IEndpoint,
+    endpoint: Endpoint,
     buffer: Buffer,
     bufferSize: number,
     maxBufferSize: number,
@@ -251,7 +251,7 @@ export class MultiTrie {
     prefix: Buffer,
     start: number,
     size: number,
-    endpoint: IEndpoint,
+    endpoint: Endpoint,
   ): boolean {
     if (size === 0) {
       if (this.#endpoints) {

@@ -1,7 +1,7 @@
 import { DenoHttpServer } from "../src/utils/DenoHttpServer.ts";
 import { Dealer } from "../src/Dealer.ts";
 import { Router } from "../src/Router.ts";
-import { Frame, IEndpoint } from "../src/Types.ts";
+import { Frame, Endpoint } from "../src/Types.ts";
 import {
   assert,
   assertStrictEquals,
@@ -20,14 +20,14 @@ Deno.test({
     router.bind(httpServer);
     router.addListener(
       "message",
-      (_endpoint: IEndpoint, routingId: Frame, message: Uint8Array) => {
+      (_endpoint: Endpoint, routingId: Frame, message: Uint8Array) => {
         assertStrictEquals(message.toString(), "hello");
         router.send([routingId, "world"]);
       },
     );
 
     const dealer = new Dealer();
-    dealer.addListener("message", (_endpoint: IEndpoint, reply: Uint8Array) => {
+    dealer.addListener("message", (_endpoint: Endpoint, reply: Uint8Array) => {
       assertStrictEquals(reply.toString(), "world");
       complete = true;
       ensureCompleted();
