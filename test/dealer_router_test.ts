@@ -1,11 +1,11 @@
 import { DenoHttpServer } from "../src/utils/DenoHttpServer.ts";
 import { Dealer } from "../src/Dealer.ts";
 import { Router } from "../src/Router.ts";
-import { Frame, Endpoint } from "../src/Types.ts";
+import { Endpoint, Frame } from "../src/Types.ts";
 import {
   assert,
   assertStrictEquals,
-} from "https://deno.land/std@0.108.0/testing/asserts.ts";
+} from "https://deno.land/std@0.103.0/testing/asserts.ts";
 
 const url = "ws://localhost:3002/dealer-router";
 

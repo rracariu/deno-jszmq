@@ -1,4 +1,4 @@
-import { assert } from "https://deno.land/std@0.108.0/testing/asserts.ts";
+import { assert } from "https://deno.land/std@0.103.0/testing/asserts.ts";
 import { Buffer, Endpoint } from "../Types.ts";
 import { copy, resize } from "./array.ts";
 

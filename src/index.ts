@@ -10,7 +10,7 @@ export { Pair } from "./Pair.ts";
 export { Req } from "./Req.ts";
 export { Rep } from "./Rep.ts";
 export { WebSocketListener } from "./WebSocketListener.ts";
-export {WebSocketEndpoint } from "./WebSocketEndpoint.ts";
+export { WebSocketEndpoint } from "./WebSocketEndpoint.ts";
 export type { HttpHandler } from "./HttpHandler.ts";
 export { DenoHttpServer } from "./utils/DenoHttpServer.ts";
 export * from "./Types.ts";

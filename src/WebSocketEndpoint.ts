@@ -1,4 +1,4 @@
-import { EventEmitter } from "https://deno.land/std@0.108.0/node/events.ts";
+import { EventEmitter } from "https://deno.land/std@0.103.0/node/events.ts";
 import { SocketOptions } from "./SocketOptions.ts";
 import { Buffer, Endpoint, Msg } from "./Types.ts";
 

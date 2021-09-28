@@ -1,4 +1,4 @@
-import { Buffer } from "https://deno.land/std@0.108.0/node/buffer.ts";
+import { Buffer } from "https://deno.land/std@0.103.0/node/buffer.ts";
 export { Buffer };
 
 export type Frame = Buffer | string;
