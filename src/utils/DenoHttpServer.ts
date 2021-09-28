@@ -82,7 +82,9 @@ export class DenoHttpServer<Data extends Record<string, unknown>>
       return new Response("Invalid path.", { status: 404 });
     }
 
-    const { websocket, response } = Deno.upgradeWebSocket(req) as any;
+    const { websocket, response } = Deno.upgradeWebSocket(req, {
+      protocol: "ZWS2.0",
+    }) as any;
     const headers: { [key: string]: string } = {};
     req.headers.forEach((val, key) => {
       headers[key] = val;
