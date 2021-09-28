@@ -26,10 +26,11 @@ it.
 Directly importing it:
 
 ```typescript
-import * as zmq from "https://deno.land/x/jszmq/mod.ts"
+import * as zmq from "https://deno.land/x/jszmq/mod.ts";
 ```
 
 Or as `import-map.json`:
+
 ```json
 "imports": {
   "jszmq": "https://deno.land/x/jszmq/mod.ts",

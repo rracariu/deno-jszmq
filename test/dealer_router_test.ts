@@ -1,7 +1,7 @@
 import { DenoHttpServer } from "../src/utils/DenoHttpServer.ts";
 import { Dealer } from "../src/Dealer.ts";
 import { Router } from "../src/Router.ts";
-import { Frame, Endpoint } from "../src/Types.ts";
+import { Endpoint, Frame } from "../src/Types.ts";
 import {
   assert,
   assertStrictEquals,
